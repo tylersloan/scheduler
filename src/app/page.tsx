@@ -1,95 +1,57 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+import clients from '@/app/actions/getClients';
+import providers from '@/app/actions/getProviders';
+import {
+  Box,
+  Card,
+  CardHeader,
+  Typography,
+  Link as MuiLink,
+} from '@mui/material';
+import Link from 'next/link';
 
-export default function Home() {
+export default async function Home() {
+  const allProviders = await providers.getAllProviders();
+  const allClients = await clients.getAllClients();
+
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+    <Box>
+      <Box sx={{ mb: 2 }}>
+        <Typography variant='h4' component='h1'>
+          Users Dashboard
+        </Typography>
+        <Typography variant='subtitle1'>
+          Click a user, provider or client, to effectively "assume" that user
+          and use the app as them
+        </Typography>
+      </Box>
+      <Card sx={{ mb: 4 }}>
+        <CardHeader title='Providers' />
+        <ul>
+          {allProviders.data.map((provider: { id: string; name: string }) => (
+            <MuiLink
+              href={`/providers/${provider.id}`}
+              key={provider.id}
+              component={Link}
+            >
+              <li key={provider.id}>{provider.name}</li>
+            </MuiLink>
+          ))}
+        </ul>
+      </Card>
+      <Card>
+        <CardHeader title='Clients' />
+        <ul>
+          {allClients.data.map((client: { id: string; name: string }) => (
+            <MuiLink
+              href={`/clients/${client.id}`}
+              key={client.id}
+              component={Link}
+            >
+              <li key={client.id}>{client.name}</li>
+            </MuiLink>
+          ))}
+        </ul>
+      </Card>
+    </Box>
   );
 }
