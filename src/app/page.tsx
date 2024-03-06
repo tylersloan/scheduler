@@ -27,7 +27,7 @@ export default async function Home() {
       <Card sx={{ mb: 4 }}>
         <CardHeader title='Providers' />
         <ul>
-          {allProviders.data.map((provider: { id: string; name: string }) => (
+          {allProviders.map((provider: Provider) => (
             <MuiLink
               href={`/providers/${provider.id}`}
               key={provider.id}

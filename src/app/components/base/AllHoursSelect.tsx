@@ -10,7 +10,13 @@ import {
 } from '@mui/material';
 import timeHelpers from '@/app/helpers/time';
 
-export default function AllHoursSelect({ day }: { day: Schedule }) {
+export default function AllHoursSelect({
+  day,
+  handleSave,
+}: {
+  day: Schedule;
+  handleSave: () => Promise<void>;
+}) {
   const [startTime, setStartTime] = useState(day.start ?? undefined);
   const [endTime, setEndTime] = useState(day.end ?? undefined);
   const [startError, setStartError] = useState(false);
@@ -39,6 +45,8 @@ export default function AllHoursSelect({ day }: { day: Schedule }) {
     }
     setEndTime(time);
   };
+
+  // maybe in a useEffect or another hook, call handleSave when startTime or endTime changes and there are no errors
 
   return (
     <>
@@ -74,7 +82,7 @@ export default function AllHoursSelect({ day }: { day: Schedule }) {
           value={endTime}
           onChange={handleEnd}
         >
-          {hours.map((hour) => (
+          {timeHelpers.TIME_SLOTS.map((hour) => (
             <MenuItem key={hour} value={hour}>
               {timeHelpers.getDisplayTime(hour)}
             </MenuItem>

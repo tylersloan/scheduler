@@ -121,14 +121,6 @@ function AppAppBar({ mode }: AppAppBarProps) {
                   Dashboard
                 </Typography>
               </MenuItem>
-              <MenuItem
-                onClick={() => router.push('/providers')}
-                sx={{ py: '6px', px: '12px' }}
-              >
-                <Typography variant='body2' color='text.primary'>
-                  Providers
-                </Typography>
-              </MenuItem>
             </Box>
           </Box>
           {/* <Box
@@ -215,14 +207,6 @@ function AppAppBar({ mode }: AppAppBarProps) {
                 >
                   <Typography variant='body2' color='text.primary'>
                     Dashboard
-                  </Typography>
-                </MenuItem>
-                <MenuItem
-                  onClick={() => router.push('/Providers')}
-                  sx={{ py: '6px', px: '12px' }}
-                >
-                  <Typography variant='body2' color='text.primary'>
-                    Providers
                   </Typography>
                 </MenuItem>
               </Box>
